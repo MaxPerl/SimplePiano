@@ -1,0 +1,15 @@
+{
+    "name": "simplepiano.perlmax",
+    "description": "A simple piano App for Ubuntu Touch",
+    "architecture": "@CLICK_ARCH@",
+    "title": "Simple Piano",
+    "hooks": {
+        "SimplePiano": {
+            "apparmor": "SimplePiano.apparmor",
+            "desktop":  "SimplePiano.desktop"
+        }
+    },
+    "version": "0.1",
+    "maintainer": "Maximilian Lika <Maximilian-Lika@gmx.de>",
+    "framework" : "@CLICK_FRAMEWORK@"
+}

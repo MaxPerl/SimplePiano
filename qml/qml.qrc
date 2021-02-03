@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>WhiteKey.qml</file>
+        <file>BlackKey.qml</file>
+    </qresource>
+</RCC>
