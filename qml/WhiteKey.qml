@@ -1,5 +1,5 @@
 import QtQuick 2.9
-import QtMultimedia 5.9
+import QtMultimedia 5.8
 
 Item {
     width: parent.width
