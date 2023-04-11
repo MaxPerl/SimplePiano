@@ -25,29 +25,27 @@ MainView {
         pixelAligned: true
 
         Rectangle {
-        id: pianoId
-        anchors.fill: parent
+            id: pianoId
+            anchors.fill: parent
+
+            MultiPointTouchArea {
+                anchors.fill: parent
+                onPressed: (points) => {
+                    for (var i = 0; i < points.length; i++)
+                    {
+                        //console.log("pressed " + points[i].x + " " + points[i].y + " item pitch: " + pianoId.childAt(points[i].x, points[i].y).pitch);
+                        pianoId.childAt(points[i].x, points[i].y).playSound()
+                    }
+                }
+            }
 
             WhiteKey {
                 pitch: "C_"
-            }
-            BlackKey {
-                // Beginn der nächsten weißen Taste abzüglich Hälfte der Weite der schwarzen Taste
-                y: keyWide - (height / 2)
-                x: blackKeyWide
-                pitch: "Cis_"
             }
 
             WhiteKey {
                 y: keyWide
                 pitch: "D_"
-            }
-
-            BlackKey {
-                // Beginn der nächsten weißen Taste abzüglich Hälfte der Weite der schwarzen Taste
-                y: ((keyWide * 2) - (height / 2 ))
-                x: blackKeyWide
-                pitch: "Dis_"
             }
 
             WhiteKey {
@@ -60,35 +58,14 @@ MainView {
                 pitch: "F_"
             }
 
-            BlackKey {
-                // Beginn der nächsten weißen Taste abzüglich Hälfte der Weite der schwarzen Taste
-                y: ((keyWide * 4) - (height / 2 ))
-                x: blackKeyWide
-                pitch: "Fis_"
-            }
-
             WhiteKey {
                 y: keyWide * 4
                 pitch: "G_"
             }
 
-            BlackKey {
-                // Beginn der nächsten weißen Taste abzüglich Hälfte der Weite der schwarzen Taste
-                y: ((keyWide * 5) - (height / 2 ))
-                x: blackKeyWide
-                pitch: "Gis_"
-            }
-
             WhiteKey {
                 y: keyWide * 5
                 pitch: "A_"
-            }
-
-            BlackKey {
-                // Beginn der nächsten weißen Taste abzüglich Hälfte der Weite der schwarzen Taste
-                y: ((keyWide * 6) - (height / 2 ))
-                x: blackKeyWide
-                pitch: "Ais_"
             }
 
             WhiteKey {
@@ -101,24 +78,9 @@ MainView {
                 pitch: "C"
             }
 
-
-            BlackKey {
-                // Beginn der nächsten weißen Taste abzüglich Hälfte der Weite der schwarzen Taste
-                y: ((keyWide * 8) - (height / 2 ))
-                x: blackKeyWide
-                pitch: "Cis"
-            }
-
             WhiteKey {
                 y: keyWide * 8
                 pitch: "D"
-            }
-
-            BlackKey {
-                // Beginn der nächsten weißen Taste abzüglich Hälfte der Weite der schwarzen Taste
-                y: ((keyWide * 9) - (height / 2 ))
-                x: blackKeyWide
-                pitch: "Dis"
             }
 
             WhiteKey {
@@ -131,35 +93,14 @@ MainView {
                 pitch: "F"
             }
 
-            BlackKey {
-                // Beginn der nächsten weißen Taste abzüglich Hälfte der Weite der schwarzen Taste
-                y: ((keyWide * 11) - (height / 2 ))
-                x: blackKeyWide
-                pitch: "Fis"
-            }
-
             WhiteKey {
                 y: keyWide * 11
                 pitch: "G"
             }
 
-            BlackKey {
-                // Beginn der nächsten weißen Taste abzüglich Hälfte der Weite der schwarzen Taste
-                y: ((keyWide * 12) - (height / 2 ))
-                x: blackKeyWide
-                pitch: "Gis"
-            }
-
             WhiteKey {
                 y: keyWide * 12
                 pitch: "A"
-            }
-
-            BlackKey {
-                // Beginn der nächsten weißen Taste abzüglich Hälfte der Weite der schwarzen Taste
-                y: ((keyWide * 13) - (height / 2 ))
-                x: blackKeyWide
-                pitch: "Ais"
             }
 
             WhiteKey {
@@ -172,23 +113,9 @@ MainView {
                 pitch: "c"
             }
 
-            BlackKey {
-                // Beginn der nächsten weißen Taste abzüglich Hälfte der Weite der schwarzen Taste
-                y: ((keyWide * 15) - (height / 2 ))
-                x: blackKeyWide
-                pitch: "cis"
-            }
-
             WhiteKey {
                 y: keyWide * 15
                 pitch: "d"
-            }
-
-            BlackKey {
-                // Beginn der nächsten weißen Taste abzüglich Hälfte der Weite der schwarzen Taste
-                y: ((keyWide * 16) - (height / 2 ))
-                x: blackKeyWide
-                pitch: "dis"
             }
 
             WhiteKey {
@@ -201,35 +128,14 @@ MainView {
                 pitch: "f"
             }
 
-            BlackKey {
-                // Beginn der nächsten weißen Taste abzüglich Hälfte der Weite der schwarzen Taste
-                y: ((keyWide * 18) - (height / 2 ))
-                x: blackKeyWide
-                pitch: "fis"
-            }
-
             WhiteKey {
                 y: keyWide * 18
                 pitch: "g"
             }
 
-            BlackKey {
-                // Beginn der nächsten weißen Taste abzüglich Hälfte der Weite der schwarzen Taste
-                y: ((keyWide * 19) - (height / 2 ))
-                x: blackKeyWide
-                pitch: "gis"
-            }
-
             WhiteKey {
                 y: keyWide * 19
                 pitch: "a"
-            }
-
-            BlackKey {
-                // Beginn der nächsten weißen Taste abzüglich Hälfte der Weite der schwarzen Taste
-                y: ((keyWide * 20) - (height / 2 ))
-                x: blackKeyWide
-                pitch: "ais"
             }
 
             WhiteKey {
@@ -242,6 +148,114 @@ MainView {
                 pitch: "c-"
             }
 
+            //Black keys needs to come after White keys so that childAt() function sees them as being on top of the white keys
+            //without the change WhiteKey right after the BlackKey would receive the play signal incorrectly when right half of the black key is pressed
+            //The z property does not seem to make a difference for the childAt() function (maybe there exists a better solution?)
+
+            BlackKey {
+                // Beginn der nächsten weißen Taste abzüglich Hälfte der Weite der schwarzen Taste
+                y: keyWide - (height / 2)
+                x: blackKeyWide
+                pitch: "Cis_"
+            }
+
+            BlackKey {
+                // Beginn der nächsten weißen Taste abzüglich Hälfte der Weite der schwarzen Taste
+                y: ((keyWide * 2) - (height / 2 ))
+                x: blackKeyWide
+                pitch: "Dis_"
+            }
+
+            BlackKey {
+                // Beginn der nächsten weißen Taste abzüglich Hälfte der Weite der schwarzen Taste
+                y: ((keyWide * 4) - (height / 2 ))
+                x: blackKeyWide
+                pitch: "Fis_"
+            }
+
+            BlackKey {
+                // Beginn der nächsten weißen Taste abzüglich Hälfte der Weite der schwarzen Taste
+                y: ((keyWide * 5) - (height / 2 ))
+                x: blackKeyWide
+                pitch: "Gis_"
+            }
+
+            BlackKey {
+                // Beginn der nächsten weißen Taste abzüglich Hälfte der Weite der schwarzen Taste
+                y: ((keyWide * 6) - (height / 2 ))
+                x: blackKeyWide
+                pitch: "Ais_"
+            }
+
+            BlackKey {
+                // Beginn der nächsten weißen Taste abzüglich Hälfte der Weite der schwarzen Taste
+                y: ((keyWide * 8) - (height / 2 ))
+                x: blackKeyWide
+                pitch: "Cis"
+            }
+
+            BlackKey {
+                // Beginn der nächsten weißen Taste abzüglich Hälfte der Weite der schwarzen Taste
+                y: ((keyWide * 9) - (height / 2 ))
+                x: blackKeyWide
+                pitch: "Dis"
+            }
+
+            BlackKey {
+                // Beginn der nächsten weißen Taste abzüglich Hälfte der Weite der schwarzen Taste
+                y: ((keyWide * 11) - (height / 2 ))
+                x: blackKeyWide
+                pitch: "Fis"
+            }
+
+            BlackKey {
+                // Beginn der nächsten weißen Taste abzüglich Hälfte der Weite der schwarzen Taste
+                y: ((keyWide * 12) - (height / 2 ))
+                x: blackKeyWide
+                pitch: "Gis"
+            }
+
+            BlackKey {
+                // Beginn der nächsten weißen Taste abzüglich Hälfte der Weite der schwarzen Taste
+                y: ((keyWide * 13) - (height / 2 ))
+                x: blackKeyWide
+                pitch: "Ais"
+            }
+
+            BlackKey {
+                // Beginn der nächsten weißen Taste abzüglich Hälfte der Weite der schwarzen Taste
+                y: ((keyWide * 15) - (height / 2 ))
+                x: blackKeyWide
+                pitch: "cis"
+            }
+
+            BlackKey {
+                // Beginn der nächsten weißen Taste abzüglich Hälfte der Weite der schwarzen Taste
+                y: ((keyWide * 16) - (height / 2 ))
+                x: blackKeyWide
+                pitch: "dis"
+            }
+
+            BlackKey {
+                // Beginn der nächsten weißen Taste abzüglich Hälfte der Weite der schwarzen Taste
+                y: ((keyWide * 18) - (height / 2 ))
+                x: blackKeyWide
+                pitch: "fis"
+            }
+
+            BlackKey {
+                // Beginn der nächsten weißen Taste abzüglich Hälfte der Weite der schwarzen Taste
+                y: ((keyWide * 19) - (height / 2 ))
+                x: blackKeyWide
+                pitch: "gis"
+            }
+
+            BlackKey {
+                // Beginn der nächsten weißen Taste abzüglich Hälfte der Weite der schwarzen Taste
+                y: ((keyWide * 20) - (height / 2 ))
+                x: blackKeyWide
+                pitch: "ais"
+            }
         } //Rectangle pianoID
 
     } //Flickable
