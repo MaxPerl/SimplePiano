@@ -9,7 +9,7 @@
             "desktop":  "SimplePiano.desktop"
         }
     },
-    "version": "0.2",
+    "version": "0.3",
     "maintainer": "Maximilian Lika <Maximilian-Lika@gmx.de>",
     "framework" : "@CLICK_FRAMEWORK@"
 }
