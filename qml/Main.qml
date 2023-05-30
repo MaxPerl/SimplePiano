@@ -23,6 +23,7 @@ MainView {
         contentHeight: keyWide*22
         contentY: keyWide*7
         pixelAligned: true
+        id: keyboardFlickable
 
         Rectangle {
             id: pianoId
@@ -256,7 +257,17 @@ MainView {
                 x: blackKeyWide
                 pitch: "ais"
             }
+
         } //Rectangle pianoID
 
     } //Flickable
+    LockButton
+    {
+        x: parent.width - keyWide
+        y: 0
+        width: keyWide
+        height: keyWide
+        onLockActivated: keyboardFlickable.interactive = false
+        onLockDeactivated: keyboardFlickable.interactive = true
+    }
 }
