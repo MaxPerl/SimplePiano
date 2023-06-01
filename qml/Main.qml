@@ -23,6 +23,7 @@ MainView {
         contentHeight: keyWide*22
         contentY: keyWide*7
         pixelAligned: true
+        boundsBehavior: Flickable.StopAtBounds
         id: keyboardFlickable
 
         Rectangle {
@@ -261,13 +262,87 @@ MainView {
         } //Rectangle pianoID
 
     } //Flickable
+
+    property var panelButtonSize: keyWide * 0.6
+
+    Rectangle
+    {
+        id: pitchDownButton
+        x: parent.width - panelButtonSize
+        y: 0
+        width: panelButtonSize
+        height: panelButtonSize
+        color: "black"
+        border.width: 1
+        border.color: "slategray"
+        Icon {
+            anchors.fill: parent
+            name: "toolkit_arrow-up"
+            color: "gray"
+        }
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                keyboardFlickable.contentY = Math.max(0, keyboardFlickable.contentY - keyWide * 7)
+            }
+        }
+    }
+
     LockButton
     {
-        x: parent.width - keyWide
-        y: 0
-        width: keyWide
-        height: keyWide
+        id: lockButtonInstance
+        anchors.top: pitchDownButton.bottom
+        anchors.horizontalCenter: pitchDownButton.horizontalCenter
+        width: panelButtonSize
+        height: panelButtonSize
+        border.width: 1
+        border.color: "slategray"
         onLockActivated: keyboardFlickable.interactive = false
         onLockDeactivated: keyboardFlickable.interactive = true
+    }
+
+
+
+    Rectangle
+    {
+        id: pitchUpButton
+        anchors.top: lockButtonInstance.bottom
+        anchors.horizontalCenter: lockButtonInstance.horizontalCenter
+        width: panelButtonSize
+        height: panelButtonSize
+        color: "black"
+        border.width: 1
+        border.color: "slategray"
+        Icon {
+            anchors.fill: parent
+            name: "toolkit_arrow-down"
+            color: "gray"
+        }
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                keyboardFlickable.contentY =
+                        Math.min(keyboardFlickable.contentHeight - keyboardFlickable.height, keyboardFlickable.contentY + keyWide * 7)
+            }
+        }
+    }
+
+    ScrollBar {
+        active: true
+        interactive: false
+        orientation: Qt.Vertical
+        anchors.top: pitchDownButton.top
+        anchors.bottom: pitchUpButton.bottom
+        anchors.right: pitchDownButton.left
+        policy: ScrollBar.AlwaysOn
+        height: pitchDownButton.height + lockButtonInstance.height + pitchUpButton.height
+        width: panelButtonSize / 4
+        size: keyboardFlickable.visibleArea.heightRatio
+        position: keyboardFlickable.visibleArea.yPosition
+        background: Rectangle {
+            color: "black"
+            border.width: 1
+            border.color: "slategray"
+        }
     }
 }
